@@ -51,3 +51,51 @@ function removeTicket(event) {
 }
 }
 
+//Task 5 - Inline Editing for Support Tickets
+function enableTicketEditing(ticketCard) {
+    const nameElement = ticketCard.querySelector("h3");
+    const issueElement = ticketCard.querySelector("p");
+    const priorityElement = ticketCard.querySelector("span");
+
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.value = nameElement.textContent;
+    const issueInput = document.createElement("input");
+    issueInput.type = "text";
+    issueInput.value = IssueElement.textContent;
+
+    const prioritySelect = document.createElement("select");
+    ["Low", "Medium", "High"].forEach(level => {
+        const option = document.createElement("option");
+        option.value = level;
+        option.textContent = level;
+        if (priorityElement.textContent.includes(level)) {
+            option.selected = true;
+        }
+        prioritySelect.appendChild(option);
+    });
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+
+    saveButton.addEventListener("click", function() {
+        nameElement.textContent = nameInput.value;
+        issueElement.textContent = issueInput.value;
+        priorityElement.textContent = `Priority: ${prioritySelect.value}`;
+
+        ticketCard.replaceChild(nameElement, nameInput);
+        ticketCard.replaceChild(issueElement, issueInput);
+        ticketCard.replaceChild(priorityElement, prioritySelect);
+        ticketCard.removeChild(saveButton);
+    });
+    
+        ticketCard.replaceChild(nameInput, nameElement);
+        ticketCard.replaceChild(issueInput, issueElement);
+        ticketCard.replaceChild(prioritySelect, priorityElement);
+        ticketCard.appendChild(saveButton);
+}
+ticketContainer.addEventListener("dblclick", function(event) {
+    const clickedTicket = event.target.closest(".ticket-card");
+    if (clickedTicket) {
+        enableTicketEditing(clickedTicket);
+    }
+});
