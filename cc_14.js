@@ -9,16 +9,18 @@ function addSupportTicket(customerName, issueDescription, priority) {
     }
     const ticketName = document.createElement("h3")
     ticketName.textContent = customerName;
+    
     const ticketIssue = document.createElement("p");
     ticketIssue.textContent = issueDescription;
+
     const ticketPriority = document.createElement("span");
     ticketPriority.textContent = `Priority: ${priority}`;
+   
     const resolveButton = document.createElement("button");
     resolveButton.textContent = "Resolve";
-    resolveButton.addEventListener("click", function(event) {
-        event.stopPropagation();
-        ticketContainer.removeChild(ticketCard);
-    });
+    
+    resolveButton.addEventListener("click", removeTicket);
+       
     ticketCard.appendChild(ticketName);
     ticketCard.appendChild(ticketIssue);
     ticketCard.appendChild(ticketPriority);
@@ -31,8 +33,21 @@ function addSupportTicket(customerName, issueDescription, priority) {
 function highlightHighPriorityTickets() {
     const highPriorityTickets = document.querySelectorAll(".high-priority");
     const ticketArray = [...highPriorityTickets];
+    
     ticketArray.forEach(ticket => {
         ticket.style.backgroundColor = "#ffdddd";
         ticket.style.border = "2px solid red";
     });
 }
+
+//Task 4 - Support Ticket Resolution with Event Bubbling
+ticketContainer.addEventListener("click", function(event) {
+    console.log("A support ticket was clicked.");
+});
+function removeTicket(event) {
+    if (event.target.tagName === "Button") {
+    event.stopPropagation();
+    event.target.parentElement.remove();
+}
+}
+
