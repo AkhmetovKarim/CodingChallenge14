@@ -7,7 +7,8 @@ function addSupportTicket(customerName, issueDescription, priority) {
     if (priority === "High") {
         ticketCard.classList.add("high-priority");
     }
-    const ticketName = document.createElement = customerName;
+    const ticketName = document.createElement("h3")
+    ticketName.textContent = customerName;
     const ticketIssue = document.createElement("p");
     ticketIssue.textContent = issueDescription;
     const ticketPriority = document.createElement("span");
@@ -21,7 +22,17 @@ function addSupportTicket(customerName, issueDescription, priority) {
     ticketCard.appendChild(ticketName);
     ticketCard.appendChild(ticketIssue);
     ticketCard.appendChild(ticketPriority);
-    ticketCard.appendChild(ticketButton);
+    ticketCard.appendChild(resolveButton);
 
     ticketContainer.appendChild(ticketCard);
+}
+
+//Task 3 - Highlighting High Priority Tickets
+function highlightHighPriorityTickets() {
+    const highPriorityTickets = document.querySelectorAll(".high-priority");
+    const ticketArray = [...highPriorityTickets];
+    ticketArray.forEach(ticket => {
+        ticket.style.backgroundColor = "#ffdddd";
+        ticket.style.border = "2px solid red";
+    });
 }
